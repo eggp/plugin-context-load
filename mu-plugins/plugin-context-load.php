@@ -14,5 +14,5 @@ function plugin_context_load_active_plugins_filter($plugins = array())
 	{
 		return get_option("plugin_context_load/admin_plugins",false);
 	}
-	return get_option("plugin_context_load/frontend_plugins",false);
+	return get_option("plugin_context_load/front_end_plugins",false);
 }
