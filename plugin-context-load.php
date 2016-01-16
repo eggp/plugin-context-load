@@ -4,7 +4,7 @@
 Plugin Name: Plugin Context Load
 Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
 Description: A brief description of the Plugin.
-Version: 0.1
+Version: 1.0
 Author: eggp
 Author URI: http://URI_Of_The_Plugin_Author
 License: A "Slug" license name e.g. GPL2
@@ -44,12 +44,28 @@ if ( is_admin() ) {
 							<?php echo $plugin['Name']; ?>
 						</td>
 						<td>
+							<input type="checkbox" name="cron_plugins[]" value="<?php echo $path; ?>"
+									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+						</td>
+						<td>
+							<input type="checkbox" name="xmlrpc_plugins[]" value="<?php echo $path; ?>"
+									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+						</td>
+						<td>
+							<input type="checkbox" name="loggedin_user_ajax_plugins[]" value="<?php echo $path; ?>"
+									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+						</td>
+						<td>
+							<input type="checkbox" name="not_loggedin_user_ajax_plugins[]" value="<?php echo $path; ?>"
+									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+						</td>
+						<td>
 							<input type="checkbox" name="admin_plugins[]" value="<?php echo $path; ?>"
 									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 						<td>
 							<input type="checkbox" name="front_end_plugins[]" value="<?php echo $path; ?>"
-							<?php echo ((array_search($path,$front_end_plugins) !== false)?"checked='checked'":""); ?>/>
+									<?php echo ((array_search($path,$front_end_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -79,6 +95,10 @@ if ( is_admin() ) {
 		check_admin_referer( '3rijesetjf' ,'4oitjoei4tr');
 
 		if(isset($_POST['admin_plugins']) && isset($_POST['front_end_plugins'])) {
+			update_option( "plugin_context_load/cron_plugins", $_POST['cron_plugins'] );
+			update_option( "plugin_context_load/xmlrpc_plugins", $_POST['xmlrpc_plugins'] );
+			update_option( "plugin_context_load/loggedin_user_ajax_plugins", $_POST['loggedin_user_ajax_plugins'] );
+			update_option( "plugin_context_load/not_loggedin_user_ajax_plugins", $_POST['not_loggedin_user_ajax_plugins'] );
 			update_option( "plugin_context_load/admin_plugins", $_POST['admin_plugins'] );
 			update_option( "plugin_context_load/front_end_plugins", $_POST['front_end_plugins'] );
 		}
