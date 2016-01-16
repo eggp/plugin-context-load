@@ -24,6 +24,10 @@ if ( is_admin() ) {
 	function plugin_context_load_admin_form() {
 		// TODO onmagat vegye ki a listabol es mindig legyen benne mentesnel!
 		$plugins = get_plugins();
+		$cron_plugins = get_option( "plugin_context_load/cron_plugins", array());
+		$xmlrpc_plugins = get_option( "plugin_context_load/xmlrpc_plugins", array());
+		$loggedin_ajax_plugins = get_option( "plugin_context_load/loggedin_user_ajax_plugins", array());
+		$not_loggedin_ajax_plugins = get_option( "plugin_context_load/not_loggedin_user_ajax_plugins", array());
 		$admin_plugins = get_option( "plugin_context_load/admin_plugins", array());
 		$front_end_plugins = get_option( "plugin_context_load/front_end_plugins", array() );
 
@@ -33,6 +37,10 @@ if ( is_admin() ) {
 				<thead>
 				<tr>
 					<th>Név</th>
+					<th>CRON</th>
+					<th>XML RPC</th>
+					<th>AJAX Logged in user</th>
+					<th>AJAX Not logged in user</th>
 					<th>Admin</th>
 					<th>Front page</th>
 				</tr>
@@ -45,19 +53,19 @@ if ( is_admin() ) {
 						</td>
 						<td>
 							<input type="checkbox" name="cron_plugins[]" value="<?php echo $path; ?>"
-									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+									<?php echo ((array_search($path,$cron_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 						<td>
 							<input type="checkbox" name="xmlrpc_plugins[]" value="<?php echo $path; ?>"
-									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+									<?php echo ((array_search($path,$xmlrpc_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 						<td>
 							<input type="checkbox" name="loggedin_user_ajax_plugins[]" value="<?php echo $path; ?>"
-									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+									<?php echo ((array_search($path,$loggedin_ajax_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 						<td>
 							<input type="checkbox" name="not_loggedin_user_ajax_plugins[]" value="<?php echo $path; ?>"
-									<?php echo ((array_search($path,$admin_plugins) !== false)?"checked='checked'":""); ?>/>
+									<?php echo ((array_search($path,$not_loggedin_ajax_plugins) !== false)?"checked='checked'":""); ?>/>
 						</td>
 						<td>
 							<input type="checkbox" name="admin_plugins[]" value="<?php echo $path; ?>"
@@ -72,7 +80,7 @@ if ( is_admin() ) {
 				</tbody>
 				<tfoot>
 				<tr>
-					<td colspan="3">
+					<td colspan="7">
 						<?php wp_nonce_field("3rijesetjf","4oitjoei4tr"); ?>
 						<input type="hidden" name="action" value="plugin_context_load_save_admin_form" />
 						<input type="submit" value="mentés"/>
